@@ -1,7 +1,6 @@
 ---
 theme: jekyll-theme-slate
 layout: page
-title: "Android Video Downloader"
 ---
 # Table of Content
 - [Features](#features)
