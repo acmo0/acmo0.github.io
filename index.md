@@ -1,3 +1,7 @@
+layout: page
+title: "Android Video Downloader"
+permalink: /
+# Table of Content
 - [Description](#description)
   - [License](#license)
   - [Privacy](#privacy)
@@ -5,7 +9,6 @@
 - [Download](#download)
 
 ## Description
-***
 
 This application is a fully open-source project. The entire source code is available on [github](https://github.com/acmo0/Android-Youtube-Downloader).
 ### License
@@ -20,7 +23,7 @@ This software is released under the [GPL-v3.0](https://github.com/acmo0/Android-
 Android Youtube Downloader does not collect any user data. Some data are stored ONLY locally on your smartphone in order to improve your user experience.
 
 ## Features
-***
+
 Download videos from various sites like :
 - Youtube
 - Twitter
@@ -28,3 +31,11 @@ Download videos from various sites like :
 - Dailymotion
 
 ([See the full list of available websites](https://ytdl-org.github.io/youtube-dl/supportedsites.html))
+
+<img src="images/screen1.png" width="300" height="auto"/>    <img src="images/screen2.jpg" width="300" height="auto"/>
+
+## Download
+
+[Download the lastest version from github](https://github.com/acmo0/Android-Youtube-Downloader/releases/latest).
+
+Alternatively, you can build from source by downloading the source-code from github.
