@@ -1,7 +1,3 @@
----
-theme: jekyll-theme-slate
-layout: page
----
 # Table of Content
 - [Features](#features)
 - [Download](#download)
