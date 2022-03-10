@@ -1,6 +1,6 @@
 layout: page
 title: "Android Video Downloader"
-permalink: /
+permalink: /index/
 # Table of Content
 - [Description](#description)
   - [License](#license)
