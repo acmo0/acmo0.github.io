@@ -1,3 +1,4 @@
 layout: page
 title: Android Video Downloader
-permalink: 
+permalink: /
+# Android Video downloader
