@@ -1,7 +1,8 @@
 
 <head>
   <meta name="google-site-verification" content="GJ7maI25ulgEd4v2It-2FEokMZjFJyk5MacuSC0A2h8" />
-</head>  
+</head>
+
 # Android Youtube Downloader
 ## Table of Content
 - [Features](#features)
