@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Le petit bain
-tags: Write-up 404CTF 2024 crypto easy
+tags: Write-up 404CTF 2024 crypto  
 ---
 ![](assets/img/le_petit_bain_screenshot.png)
 # Résolution
@@ -29,7 +29,7 @@ dans le fichier *challenge.py*, on peut alors effectuer la même attaque que pou
 Solution implémentée en python3 :
 ```python
 # 404CTF 2024
-# Challenge : Le Petit Bain, easy
+# Challenge : Le Petit Bain,  
 # Authors : acmo0 & Little_endi4ne
 
 encrypted = "C_ef8K8rT83JC8I0fOPiN6P!liE03W2NXFh1viJCROAqXb6o"

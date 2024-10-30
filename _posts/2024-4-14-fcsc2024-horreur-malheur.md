@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Horreur Malheur
-tags: Write-up 2024 forencisc logs linux CVE-2023-46805 CVE-2024-21887 FCSC fcsc
+tags: Write-up 2024 forencisc logs linux CVE-2023-46805 CVE-2024-21887 FCSC
 ---
 ## Category
 Forensic

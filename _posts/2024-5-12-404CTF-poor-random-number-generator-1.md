@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Poor Random Number Generator [1/2]
-tags: Write-up 404CTF 2024 crypto easy
+tags: Write-up 404CTF 2024 crypto  
 ---
 ![](https://acmo0.github.io/assets/img/prng1_screenshot.png)
 
@@ -22,7 +22,7 @@ De plus on dispose du début en clair du fichier *flag.png*.
 Voici la solution implémentée en python3 :
 ```python
 # 404CTF 2024
-# Challenge : Poor Random Number Generator 1, medium
+# Challenge : Poor Random Number Generator 1,  
 # Authors : acmo0
 
 from my_random import Generator

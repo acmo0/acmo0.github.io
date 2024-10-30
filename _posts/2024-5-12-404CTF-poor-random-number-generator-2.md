@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Poor Random Number Generator [2/2]
-tags: Write-up 404CTF 2024 crypto medium
+tags: Write-up 404CTF 2024 crypto  
 ---
 ![](https://acmo0.github.io/assets/img/prng2_screenshot.png)
 
@@ -66,7 +66,7 @@ def verify(polys, states, generated):
 Voici le code entier, parallélisé en python :
 ```python
 # 404CTF 2024
-# Challenge : Poor Random Number Generator 2, medium
+# Challenge : Poor Random Number Generator 2,  
 # Authors : acmo0
 
 from LFSR import LFSR

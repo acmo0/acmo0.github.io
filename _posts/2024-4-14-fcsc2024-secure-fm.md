@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Secure FM
-tags: Write-up 2024 hardware radio-frequencies fm fhss FCSC fcsc
+tags: Write-up 2024  ware radio-frequencies fm fhss FCSC
 ---
 ![meme](assets/img/antenna.jpeg)
 # Category

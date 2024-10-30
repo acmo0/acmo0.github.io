@@ -1,7 +1,7 @@
 ---
 layout: post
 title: J'ai glissé chef !
-tags: Write-up 404CTF 2024 crypto hard
+tags: Write-up 404CTF 2024 crypto  
 ---
 ![](https://acmo0.github.io/assets/img/j_ai_glisse_chef_screenshot.png)
 
@@ -45,7 +45,7 @@ Cela nous permet d'avoir exactement le réseau de Feistel désiré pour ré-ité
 Solution en python3 :
 ```python
 # 404CTF 2024
-# Challenge : J'ai glissé chef, hard
+# Challenge : J'ai glissé chef,  
 # Authors : acmo0
 
 from Cryptodome.Util.number import bytes_to_long,long_to_bytes
