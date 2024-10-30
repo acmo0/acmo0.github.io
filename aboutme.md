@@ -1,16 +1,8 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to go on a date with me
+#subtitle: Why you'd want to go on a date with me
 ---
 
-My name is Inigo Montoya. I have the following qualities:
-
-- I rock a great mustache
-- I'm extremely loyal to my family
-
-What else do you need?
-
-### My story
-
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](https://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+I am a Telecom SudParis student, passionate by **cyber security** (mainly cryptography and forensic), **computer science** and **maths**. I made various projects which can be found [on my github profile](https://github.com/acmo0). I also enjoy CTF plus I have a [root-me profile](https://root-me.org/acmo0) ! Some of my write-up can be found on this blog. I joined recently [HackademINT](https://www.hackademint.org), at  team of students who do lots of CTF and also organize the [404CTF](https://www.404ctf.fr). I also do some presentations on my campus about the RSA cryptosystem, symetric cryptosystems (especialy AES and block ciphers), differential cryptanalysis and Man in The Middle attacks using arp poisoning.
+More recently, I became very involved in the management of the club's IT infrastructure.
