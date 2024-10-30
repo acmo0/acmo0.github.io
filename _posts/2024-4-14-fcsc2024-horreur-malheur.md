@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Horreur Malheur
-categories: Write-up 2024 forencisc logs linux CVE-2023-46805 CVE-2024-21887 FCSC fcsc
+tags: Write-up 2024 forencisc logs linux CVE-2023-46805 CVE-2024-21887 FCSC fcsc
 ---
 ## Category
 Forensic
@@ -19,7 +19,7 @@ Note : La première partie (`Archive chiffrée`) débloque les autres parties, �
 > Before reading, it's important to notice that I solved the challenges in the order 2 -> 1 -> 3 -> 4
 
 And because a meme is always welcome, even if its not always the right tool to solve a forensic challenge, i used intensievly grep for this challenge so I have to mention it :
-![grepping.jpg](https://acmo0.github.io/images/grepping.jpg)
+![grepping.jpg](https://acmo0.github.io/assets/img/grepping.jpg)
 
 
 
@@ -203,7 +203,7 @@ So if I get the requests made at this endpoint of the API, I am able to decrypt 
 
 
 It's time to grep !
-![grep again !](https://acmo0.github.io/images/grep_again.gif)
+![grep again !](https://acmo0.github.io/assets/img/grep_again.gif)
 
 ```bash
 grep -o 'cmd=.*' cav_webserv.log | grep -v 404 | sed -En 's/cmd=(.*+%3D) .*/\1/p'

@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Poor Random Number Generator [1/2]
-categories: Write-up 404CTF 2024 crypto easy
+tags: Write-up 404CTF 2024 crypto easy
 ---
-![](https://acmo0.github.io/images/prng1_screenshot.png)
+![](https://acmo0.github.io/assets/img/prng1_screenshot.png)
 
 # Résolution
 

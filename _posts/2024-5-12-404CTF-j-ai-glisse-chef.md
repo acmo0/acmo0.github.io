@@ -1,9 +1,9 @@
 ---
 layout: post
 title: J'ai glissé chef !
-categories: Write-up 404CTF 2024 crypto hard
+tags: Write-up 404CTF 2024 crypto hard
 ---
-![](https://acmo0.github.io/images/j_ai_glisse_chef_screenshot.png)
+![](https://acmo0.github.io/assets/img/j_ai_glisse_chef_screenshot.png)
 
 # Informations générales
 Nous avons affaire à un chiffrement par bloc, suivant un [schéma de Feistel](https://fr.wikipedia.org/wiki/R%C3%A9seau_de_Feistel) avec quelques détails assez étrange : il y a deux clés qui se répètent en alternant suivant le round et un nombre de round assez grand (96 rounds). Chaque clé fait 32 bits, une clé peut se bruteforcer mais les deux clés ne peuvent pas de bruteforcer. Il est à noter qu'aucun bruteforce des clés n'est nécessaire pour résoudre ce challenge.
@@ -35,10 +35,10 @@ L'idée est ensuite de trouver une paire qui satisfasse certaines conditions dé
 
 Cette méthode permet donc, pour un réseau de Feistel quelconque vulnérable à une slide attaque de retrouver la première clé. Afin de réutiliser ce qui a déjà été codé, il serait utile de se ramener exactement au même problème que précédement mais en changeant l'alternance des clés de chiffrement utilisées comme décrit dans la figure suivante :
 
-![shiffted_cipher](https://acmo0.github.io/images/diag1.png)
+![shiffted_cipher](https://acmo0.github.io/assets/img/diag1.png)
 
 Pour cela, on met en place le système suivant :
-![shiffter_cipher2](https://acmo0.github.io/images/diag2.png)
+![shiffter_cipher2](https://acmo0.github.io/assets/img/diag2.png)
 
 Cela nous permet d'avoir exactement le réseau de Feistel désiré pour ré-itérer la même attaque déjà implémentée pour obtenir la seconde clé. Après avoir "entouré" notre oracle par un déchiffrement d'un round avec clé 1 avant et un chiffrement d'un round avec la clé 1 après, il suffit de recommencer et on obtient la seconde clé.
 

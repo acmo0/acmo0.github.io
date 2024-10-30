@@ -1,12 +1,12 @@
 ---
 layout: post
 title: Le petit bain
-categories: Write-up 404CTF 2024 crypto easy
+tags: Write-up 404CTF 2024 crypto easy
 ---
-![](images/le_petit_bain_screenshot.png)
+![](assets/img/le_petit_bain_screenshot.png)
 # Résolution
 Il s'agit de la suite du challenge *Bébé nageur*. Ce challenge est inspiré du principe de chiffrement par blocs avec un chiffrement affine. Ce chiffrement est composé de 6 rounds, chaque round a la forme suivante : 
-![round_schema](https://acmo0.github.io/images/diag1.drawio.png)
+![round_schema](https://acmo0.github.io/assets/img/diag1.drawio.png)
 Cependant, on remarque deux propriétés particulières de cette permutation `p`:
 - `p^6` est l'identité
 - Pour chaque sous-bloc de 6 caractères, la permutation est identique

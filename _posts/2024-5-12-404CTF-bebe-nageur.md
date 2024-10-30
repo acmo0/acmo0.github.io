@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Bébé nageur
-categories: Write-up 404CTF 2024 crypto intro
+tags: Write-up 404CTF 2024 crypto intro
 ---
-![](images/bebe_nageur_screenshot.png)
+![](assets/img/bebe_nageur_screenshot.png)
 # Résolution
 Il s'agit d'un chiffrement affine, on est donc face à un problème du type `c(x) = ax+b [n]`, où a et b sont les clés de notre chiffre. On peut effectuer un brute-force sur `a` et `b` (les valeurs possibles étant très restreintes). L'autre façon de faire est de récupérer `a` et `b` en faisant une attaque à clair connu. En effet, le format du flag est `404CTF{ ... }`. De plus, on a la correspondance entre les caractères et leur représentation numérique. En prennant les deux premiers caractères du flag, on a un système du type : 
 ```
