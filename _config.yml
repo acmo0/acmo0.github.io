@@ -10,7 +10,7 @@
 ############################
 
 # Name of website
-title: Acmo0's Blog
+title: Blog
 
 # Your name to show in the footer
 author: acmo0
@@ -21,6 +21,7 @@ author: acmo0
 
 navbar-links:
   About Me: "aboutme"
+  Linkedin: "https://www.linkedin.com/in/gregoire-fremion/"
 
 ################
 # --- Logo --- #
@@ -28,14 +29,14 @@ navbar-links:
 
 # Image to show in the navigation bar - works best with a square image
 # Remove this parameter if you don't want an image in the navbar
-# avatar: "/assets/img/logo_rounded.png"
+avatar: "/assets/img/logo_rounded.png"
 
 # By default, the image is cut into a circle. You can disable this behaviour by setting 'round-avatar: false'
 round-avatar: false
 
 # If you want to have an image logo in the top-left corner instead of having the title of the website,
 # then specify the following parameter
-title-img: "/assets/img/logo_rounded.png"
+# title-img: "/assets/img/logo_rounded.png"
 
 
 #####################################
