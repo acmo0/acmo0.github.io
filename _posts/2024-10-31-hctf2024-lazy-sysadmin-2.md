@@ -34,6 +34,3 @@ wall $tempp
 ```
 
 So I executed `curl -s https://pastebin.com/raw/59mL2V9i` and got some base64 encoded content. By decoding it, I got the flag : `HERO{AlwaYs-Ch3ck_What_u-C0Py-P4ste}`
-
-***
-*Write-up author : acmo0
