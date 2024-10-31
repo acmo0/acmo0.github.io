@@ -25,6 +25,7 @@ layout: null
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
   --page-col: {{ site.dark-page-col | default: "#FFFFFF" }};
   --text-col: {{ site.dark-text-col | default: "#404040" }};
   --link-col: {{ site.dark-link-col | default: "#008AFF" }};
@@ -36,7 +37,6 @@ layout: null
   --footer-text-col: {{ site.dark-footer-text-col | default: "#777777" }};
   --footer-link-col: {{ site.dark-footer-link-col | default: "#404040" }};
   --footer-hover-col: {{ site.dark-footer-hover-col | default: "#0085A1" }};
-
 }
 /* --- General --- */
 
