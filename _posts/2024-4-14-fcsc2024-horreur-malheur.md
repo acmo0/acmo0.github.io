@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Horreur Malheur
-tags: Write-up 2024 forencisc logs linux CVE-2023-46805 CVE-2024-21887 FCSC
+tags: Write-up 2024 forensics logs linux CVE-2023-46805 CVE-2024-21887 FCSC
 ---
 ## Category
 Forensic
@@ -19,7 +19,7 @@ Note : La première partie (`Archive chiffrée`) débloque les autres parties, �
 > Before reading, it's important to notice that I solved the challenges in the order 2 -> 1 -> 3 -> 4
 
 And because a meme is always welcome, even if its not always the right tool to solve a forensic challenge, i used intensievly grep for this challenge so I have to mention it :
-![grepping.jpg](https://acmo0.github.io/assets/img/grepping.jpg)
+![grepping.jpg](https://acmo0.github.io/assets/img/memes/grepping.jpg)
 
 
 

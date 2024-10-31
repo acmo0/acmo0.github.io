@@ -1,7 +1,7 @@
 ---
 layout: post
 title: RSA Destroyer 
-tags: Write-up FCSC 2021 cryptography
+tags: Write-up FCSC 2021 cryptography RSA
 ---
 
 ## Challenge description : 

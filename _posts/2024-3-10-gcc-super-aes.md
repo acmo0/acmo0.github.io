@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Super AES 
-tags: Write-up 2024 cryptography lfsr symetric GCC
+tags: Write-up 2024 crypto lcg symetric GCC
 ---
 
 ## Description

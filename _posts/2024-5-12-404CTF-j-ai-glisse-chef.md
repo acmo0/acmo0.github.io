@@ -1,7 +1,7 @@
 ---
 layout: post
 title: J'ai glissé chef !
-tags: Write-up 404CTF 2024 crypto  
+tags: Write-up 404CTF 2024 crypto slide-attack
 ---
 ![](https://acmo0.github.io/assets/img/j_ai_glisse_chef_screenshot.png)
 

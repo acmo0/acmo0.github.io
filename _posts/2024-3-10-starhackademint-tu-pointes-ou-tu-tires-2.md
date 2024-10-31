@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Tu pointes ou tu tires 2/2
-tags: Write-up 2023 cryptography arithmetic
+tags: Write-up 2023 crypto arithmetic
 ---
 
 ## Énnoncé
