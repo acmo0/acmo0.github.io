@@ -61,6 +61,7 @@
 	.highlight .vi { color: #008080 } /* Name.Variable.Instance */
 	.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
 }
+
 @media (prefers-color-scheme: dark) {
 	/*.highlight  { background: #ffffff; } Dean commented out */
 	.highlight pre { color: #d0d0e9}
