@@ -1,7 +1,4 @@
-.highlight pre {
-	background-image: linear-gradient(
-    rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1.5em, rgba(0,0,0,0.02) 1.5em, rgba(0,0,0,0.02) 3em);
-}
+
 @media not (prefers-color-scheme: dark) {
 	/* .highlight  { background: #ffffff; } Dean commented out */
 	/* .highlight pre { background-color: #fff; font-size: 16px } */
