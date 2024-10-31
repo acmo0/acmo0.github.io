@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Xorrible 
-tags: Write-up 2023 cryptography
+tags: Write-up 2023 crypto
 ---
 
 ## Énnoncé
