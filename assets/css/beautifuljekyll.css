@@ -26,13 +26,13 @@ layout: null
     --footer-hover-col: {{ site.footer-hover-col | default: "#0085A1" }};
   }
   .highlight > pre {
-  background-image: linear-gradient(
-    rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1.5em, rgba(0,0,0,0.02) 1.5em, rgba(0,0,0,0.02) 3em);
-  background-size: auto 3em;
-  background-position-y: 0.625rem;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-left: 0.4375rem solid #444;
-}
+    background-image: linear-gradient(
+      rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1.5em, rgba(0,0,0,0.02) 1.5em, rgba(0,0,0,0.02) 3em);
+    background-size: auto 3em;
+    background-position-y: 0.625rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-left: 0.4375rem solid #444;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,13 +50,13 @@ layout: null
     --footer-hover-col: {{ site.dark-footer-hover-col | default: "#0085A1" }};
   }
   .highlight > pre {
-  background-image: linear-gradient(
-    rgba(255,255,255,0.03), rgba(255,255,255,0.03) 1.5em, rgba(255,255,255,0.02) 1.5em, rgba(255,255,255,0.02) 3em);
-  background-size: auto 3em;
-  background-position-y: 0.625rem;
-  border: 1px solid rgba(0,0,0,0.1);
-  border-left: 0.4375rem solid #444;
-}
+    background-image: linear-gradient(
+      rgba(255,255,255,0.03), rgba(255,255,255,0.03) 1.5em, rgba(255,255,255,0.02) 1.5em, rgba(255,255,255,0.02) 3em);
+    background-size: auto 3em;
+    background-position-y: 0.625rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-left: 0.4375rem solid #444;
+  }
 }
 /* --- General --- */
 
@@ -922,11 +922,7 @@ pre {
   border-radius: 0.25rem;
   padding: 0.59375rem;
 }
-.highlight pre {
-  border: none;
-  background: none;
-  margin: 0;
-}
+
 
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
   padding: 0;
