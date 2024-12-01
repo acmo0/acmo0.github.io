@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Le petit bain
-tags: Write-up 404CTF 2024 crypto
+tags: Write-up 404CTF 2024 crypto personnal-challenge
 ---
 ![](assets/img/le_petit_bain_screenshot.png)
 # Résolution

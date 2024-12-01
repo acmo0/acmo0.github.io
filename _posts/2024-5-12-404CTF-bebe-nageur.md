@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Bébé nageur
-tags: Write-up 404CTF 2024 crypto
+tags: Write-up 404CTF 2024 crypto personnal-challenge
 ---
 ![](assets/img/bebe_nageur_screenshot.png)
 # Résolution
