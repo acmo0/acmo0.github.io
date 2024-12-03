@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Xorrible 
+subtitle: A challenge from StarHackademINT
 tags: Write-up 2023 crypto
 ---
 

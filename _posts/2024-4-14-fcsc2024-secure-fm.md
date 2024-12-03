@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Secure FM
+subtitle: A challenge from FCSC
 tags: Write-up 2024  hardware radio-frequencies fm fhss FCSC
 ---
 ![meme](/assets/img/memes/antenna.jpeg)

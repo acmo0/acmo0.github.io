@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Super AES 
+subtitle: A challenge from GCC CTF
 tags: Write-up 2024 crypto lcg symetric GCC
 ---
 

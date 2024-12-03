@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Poor Random Number Generator [2/2]
+subtitle: A challenge designed by me
 tags: Write-up 404CTF 2024 crypto lfsr symetric personnal-challenge
 ---
 ![](https://acmo0.github.io/assets/img/prng2_screenshot.png)

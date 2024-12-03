@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Horreur Malheur
+subtitle: A challenge from FCSC
 tags: Write-up 2024 forensic logs linux CVE-2023-46805 CVE-2024-21887 FCSC
 ---
 ## Category

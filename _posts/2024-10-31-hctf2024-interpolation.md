@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Interpolation
+subtitle: A challenge from HeroCTF
 tags: Write-up 2024 crypto HeroCTF
 ---
 # Description

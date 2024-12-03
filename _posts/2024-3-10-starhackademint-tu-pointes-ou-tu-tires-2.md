@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Tu pointes ou tu tires 2/2
+subtitle: A challenge from StarHackademINT
 tags: Write-up 2023 crypto arithmetic
 ---
 

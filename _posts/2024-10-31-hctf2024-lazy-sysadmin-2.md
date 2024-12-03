@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Lazy Sysadmin 2
+subtitle: A challenge from HeroCTF
 tags: Write-up 2024 forensic HeroCTF
 ---
 # Description

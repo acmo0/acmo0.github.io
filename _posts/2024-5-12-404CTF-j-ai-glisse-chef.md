@@ -1,6 +1,7 @@
 ---
 layout: post
 title: J'ai glissé chef !
+subtitle: A challenge designed by me
 tags: Write-up 404CTF 2024 crypto slide-attack symetric personnal-challenge
 ---
 ![](https://acmo0.github.io/assets/img/j_ai_glisse_chef_screenshot.png)

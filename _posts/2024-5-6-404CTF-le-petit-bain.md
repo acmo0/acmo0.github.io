@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Le petit bain
+subtitle: A challenge designed by me
 tags: Write-up 404CTF 2024 crypto personnal-challenge
 ---
 ![](assets/img/le_petit_bain_screenshot.png)

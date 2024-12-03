@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Bébé nageur
+subtitle: A challenge designed by me
 tags: Write-up 404CTF 2024 crypto personnal-challenge
 ---
 ![](assets/img/bebe_nageur_screenshot.png)
