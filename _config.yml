@@ -47,7 +47,7 @@ round-avatar: false
 # You can change the order that they show up on the page by changing the order here.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-  email: "gregoire.fremion@telecom-sudparis.eu"
+  email: "acmo0@acmo0.org"
 #  rss: true  # remove this line if you don't want to show an RSS link at the bottom
   github: acmo0
 #  medium: yourname
