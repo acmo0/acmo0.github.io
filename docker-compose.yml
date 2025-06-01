@@ -1,0 +1,14 @@
+services:
+  website:
+    build:
+      context: ./
+      args:
+        # Change it to match your ruby version
+        RUBY_VERSION: 3.3
+    ports:
+      - '127.0.0.1:4000:4000'
+    volumes:
+      # Change it to match you posts repos
+      - ./_posts:/app/_posts:ro
+      - ./assets:/app/assets
+      - ./_includes:/app/_includes

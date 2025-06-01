@@ -140,17 +140,19 @@ footer-hover-col: "#4B6193"
 
 
 dark-page-col: "#2B2B2F"
-dark-text-col: "#BABABB"
-dark-link-col: "#0040BB"
-dark-hover-col: "#00309B"
+dark-text-col: "#FAFAFA"
+dark-link-col: "#9fbd42"
+dark-hover-col: "#9fbd42"
 dark-navbar-col: "#1B1B1F"
 dark-navbar-text-col: "#B0B0B0"
 dark-navbar-border-col: "#BBBBBB"
 dark-footer-col: "#1B1B1F"
 dark-footer-text-col: "#C0C0C0"
 dark-footer-link-col: "#B0B0B0"
-dark-footer-hover-col: "#00309B"
+dark-footer-hover-col: "#9fbd42"
 
+body-font: "monospace"
+header-font: "offside"
 # Alternatively, the navbar, footer, and page background can be set to an image
 # instead of colour
 
@@ -263,7 +265,7 @@ date_format: "%B %-d, %Y"
 #################################################################################
 
 # Output options (more information on Jekyll's site)
-timezone: "America/Toronto"
+timezone: "Europe/Paris"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/

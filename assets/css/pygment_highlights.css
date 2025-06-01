@@ -4,7 +4,7 @@
 	/* .highlight pre { background-color: #fff; font-size: 16px } */
 	.highlight .c { color: #999988; font-style: italic } /* Comment */
 	.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
-	.highlight .k { font-weight: bold } /* Keyword */
+	.highlight .k, .kn { font-weight: bold } /* Keyword */
 	.highlight .o { font-weight: bold } /* Operator */
 	.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
 	.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
@@ -68,7 +68,7 @@
 	.highlight pre { color: #d0d0e9}
 	.highlight .c { color: #bfbfc0; font-style: italic } /* Comment */
 	.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
-	.highlight .k { color: #bf90ff; font-weight: bold } /* Keyword */
+	.highlight .k, .kn { color: #bf90ff; font-weight: bold } /* Keyword */
 	.highlight .o { color: #be4d25; font-weight: bold } /* Operator */
 	.highlight .cm { color: #bfbfc0; font-style: italic } /* Comment.Multiline */
 	.highlight .cp { color: #bfbfc0; font-weight: bold } /* Comment.Preproc */
