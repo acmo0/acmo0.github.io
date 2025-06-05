@@ -282,4 +282,41 @@ All in all, the flag is then `404CTF{0fa8b84a|19|76}`
 *Level : medium*
 
 ## Context
-The goal of this challenge is to retrieve data from a
+The goal of this challenge is to retrieve data from a POCSAG transmission. 
+
+## Solve
+I'll use [GQRX]([GQRX](https://www.gqrx.dk) and [sox](https://github.com/EliasOenal/multimon-ng). The idea is to use GQRX to parse the IQ format and open an UDP server. Then multimon-ng read the samples from the UDP server and decode the POCSAG. One can also do it by hand, this is feasible because it's the way I used to create this challenge.
+ 
+### GQRX
+First, let's start GQRX in the same way as described in the writeup of *Space Radio*. In addition, let's start the UDP server : go to “Input Control" and enable the server.
+
+We need to find the carier frequency, which is the peak at 135kHz. The filter width and the shape, can be set as normal and the mode has to be set one *Narrow FM*.
+
+### Multimon-ng
+Now, lets decode the POCSAG packets !
+
+First, we need to retrieve the samples from the UDP server : `nc -ul 127.0.0.1 7355`
+
+Then, we have to convert the samples in the right format in order to be decoded correctly by multimon-ng : `sox -t raw -esigned-integer -b16 -r 48000 - -t raw -esigned-integer -b16 -r 22050 - `
+
+Finaly, we can decode the POCSAG packets :`multimon-ng -t raw -a POCSAG512 -a POCSAG1200 -a POCSAG2400 -f alpha -e  --timestamp -`
+
+Explanation of the last command :
+- `-t raw` : we got the input samples in raw format
+- `-a POCSAG512 -a POCSAG1200 -a POCSAG2400` : we enable the decoding of POCSAG packets for rates 512, 1200 and 2400 bauds
+- `-f alpha` : we decode the data of the packets as alphanumerical characters (the encoding is different if we send only digits via POCSAG)
+- `--timestamp` : add a timestamp to the decoded packet (not mandatory)
+
+Then we got :
+```
+user@linux: ~$ nc -ul 127.0.0.1 7355 | sox -t raw -esigned-integer -b16 -r 48000 - -t raw -esigned-integer -b16 -r 22050 - | multimon-ng -t raw -a POCSAG512 -a POCSAG1200 -a POCSAG2400 -f alpha -e  --timestamp -
+
+multimon-ng 1.2.0
+  (C) 1996/1997 by Tom Sailer HB9JNX/AE4WA
+  (C) 2012-2022 by Elias Oenal
+Available demodulators: POCSAG512 POCSAG1200 POCSAG2400 FLEX FLEX_NEXT EAS UFSK1200 CLIPFSK FMSFSK AFSK1200 AFSK2400 AFSK2400_2 AFSK2400_3 HAPN4800 FSK9600 DTMF ZVEI1 ZVEI2 ZVEI3 DZVEI PZVEI EEA EIA CCIR MORSE_CW DUMPCSV X10 SCOPE
+Enabled demodulators: POCSAG512 POCSAG1200 POCSAG2400
+2025-06-05 14:40:32: POCSAG1200: Address: 1874448  Function: 3  Alpha:   Voici le flag : 404CTF{fb31e1acc2e6eae8be01182d3029ffcb958e3368ca991ceb53895b8c97f2f275}
+```
+
+
