@@ -5,7 +5,7 @@ tags: Write-up 404CTF2025 hardware radio-frequencies signal usb i2c personnal-ch
 katex: true
 ---
 
-> Please note that I cover the creation of these challenges in [this article](/2025-5-1-404CTF-2025-Hardware-Challenge-Creation/).
+> Please note that I cover the creation of these challenges in [this article](/2025-6-9-404CTF-2025-Hardware-Challenge-Creation/).
 
 
 # Covered challenges
@@ -198,7 +198,7 @@ Note that this circuits acts like an analog to digital converter on 4 bits, but 
 ## Context
 The challenge's goal is to retrieve informations exchanged between an Arduino board and a SHT40 sensor over I2C. More precisely, we have to find what's the serial number of the sensor and both temperature and humidity.
 
-*I cover the creation of this challenge on [this article](/2025-5-1-404CTF-2025-Hardware-Challenge-Creation/).*
+*I cover the creation of this challenge on [this article](/2025-6-9-404CTF-2025-Hardware-Challenge-Creation/).*
 
 ## Solve
 To solve this challenge, one may parse the signal of the I2C bus and then code a decoder in any language, or use some tools that are already existing. While for beginers I would recommend to solve this challenge using the first way in order to understand well the I2C protocol, it's way faster to use some existing tools.
@@ -320,3 +320,8 @@ Enabled demodulators: POCSAG512 POCSAG1200 POCSAG2400
 ```
 
 
+# *Unidentified Serial Bus [1/2]*
+*Level : medium*
+
+## Context
+We have 
