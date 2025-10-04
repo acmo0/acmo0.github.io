@@ -28,7 +28,7 @@ Some details about this challenge are a bit unusual, we can ask for encryption *
 I will precise some notations that I will use during this writeup :
 - $a\oplus b$ means the bitwise-XOR between $a$ and $b$,
 - If $a, b \in \mathbb{F}_{2^n}$, then the XOR is just the addition in that field, that will be noted $a+b$,
-- Let $E$ be a set, then $\#E$ is the cardinality of $E$,
+- Let $E$ be a set, then $\sharp E$ is the cardinality of $E$,
 - $\lbrace a, \ldots, b \rbrace$ is the set of all the integers between $a$ and $b$, both included.
 - $\mathbb{P}\(A\)$ is the probability of $A$ to occur.
 
@@ -40,7 +40,7 @@ When we are facing a symetric cipher, one of the first thing that I try is to an
 
 
 Some tools are really usefull (you can check the documentation below to have a better understanding of it):
-- DDT (Difference Distribution Table), it allows to detect if an SBox has some issues with differential cryptanalysis. More formaly $ DDT\(i,j\) = \#\lbrace x\in\lbrace 0, \ldots, 255\rbrace, SBox\(x \oplus i\) = SBox\(x\) \oplus j\rbrace $ .
+- DDT (Difference Distribution Table), it allows to detect if an SBox has some issues with differential cryptanalysis. More formaly $DDT\(i,j\) = \sharp \lbrace x\in\lbrace 0, \ldots, 255\rbrace, SBox\(x \oplus i\) = SBox\(x\) \oplus j\rbrace$ .
 - LAT (Linear Approximation Table) that allows to detect linear relations between the input of the SBox and the output of it.
 
 
