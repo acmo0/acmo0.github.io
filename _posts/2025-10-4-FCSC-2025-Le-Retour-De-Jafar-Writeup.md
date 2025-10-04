@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Le Retour de Jafar - FCSC 2025 
+title: Le Retour de Jafar - FCSC 2025
 subtitle: A boomerang attack on a SPN
 tags: Write-up FCSC crypto symetric differential boomerang
 katex: true
@@ -8,16 +8,16 @@ katex: true
 
 *This blogpost is my personnal writeup of the challenge [Le Retour de Jafar](https://hackropole.fr/fr/challenges/crypto/fcsc2025-crypto-le-retour-de-jafar/) that you can still play on [Hackropole](https://hackropole.fr).*
 
-
 # Analysis of the cipher
 
 Let's first breafly analyse the cipher. This cipher is a block cipher, following a construction called a [Substitution Permutation Network](https://en.wikipedia.org/wiki/Substitution%E2%80%93permutation_network).
 Here is some technical details :
+
 - 128 bits of block size
 - 3 parts for the encryption/decryption :
-	- 20 rounds of round key addition, substitution and permutation,
-	- A multiplication of the state at this point by the secret key in $\mathbb{F}_{2^{128}}$,
-	- Another 20 rounds of round key addition, substitution and permutation.
+    - 20 rounds of round key addition, substitution and permutation,
+    - A multiplication of the state at this point by the secret key in $\mathbb{F}_{2^{128}}$,
+    - Another 20 rounds of round key addition, substitution and permutation.
 - No key schedule, the same key is repeated for each round
 
 The goal of this challenge is to be able to forge a fresh and valid plaintext/ciphertext pair. To achieve this, we can ask three times for an encryption or a decryption of a choosen 16 bytes block.
@@ -25,29 +25,30 @@ The goal of this challenge is to be able to forge a fresh and valid plaintext/ci
 Some details about this challenge are a bit unusual, we can ask for encryption **and** decryption, there quite a lot of rounds (40 + a multiplication in the middle) and we're asking to be able to forge a fresh plaintext/ciphertext, but not to recover the key. This smells like a boomerang attack... I was conviced of that during the FCSC, but at some point I was blocked, and gave up, so this writeup is an upsolve of the challenge.
 
 # Notations
+
 I will precise some notations that I will use during this writeup :
+
 - $a\oplus b$ means the bitwise-XOR between $a$ and $b$,
 - If $a, b \in \mathbb{F}_{2^n}$, then the XOR is just the addition in that field, that will be noted $a+b$,
 - Let $E$ be a set, then $\sharp E$ is the cardinality of $E$,
 - $\lbrace a, \ldots, b \rbrace$ is the set of all the integers between $a$ and $b$, both included.
 - $\mathbb{P}(A)$ is the probability of $A$ to occur.
 
-
 # Solve
 
 ## SBox analysis
+
 When we are facing a symetric cipher, one of the first thing that I try is to analyse the SBox. There are some great tutorials about SBox analysing like [this one](https://who.paris.inria.fr/Leo.Perrin/teaching/tutorial-sbox.html) that is based on sagemath, or directly [the sagemath documentation of the module `sage.crypto.sbox.SBox`](https://doc.sagemath.org/html/en/reference/cryptography/sage/crypto/sbox.html) that is also a good resource.
 
-
 Some tools are really usefull (you can check the documentation below to have a better understanding of it):
+
 - DDT (Difference Distribution Table), it allows to detect if an SBox has some issues with differential cryptanalysis. More formaly $DDT(i,j) = \sharp \lbrace x\in\lbrace 0, \ldots, 255\rbrace, SBox(x \oplus i) = SBox(x) \oplus j\rbrace$ .
 - LAT (Linear Approximation Table) that allows to detect linear relations between the input of the SBox and the output of it.
 
-
 From these two tables, we can find interesting properties (there exists a lot more metrics and tables like the Boomerang Connectivity Table, but I will not use it for this solve). Furthermore, one can have a general visual representation of the LAT and DDT using the Jackson Pollock representation, but note that using only this visual representation, one may miss some critical information (p.e it may be tricky to spot a precise differential because of the colors used), that is why I recommand to also "analyse" it *programmatically*.
 
-
 Let first check the DDT of the SBox in sage and the probabilities of the differentials:
+
 ```python
 from sage.crypto.sbox import SBox
 
@@ -70,98 +71,89 @@ S = SBox([
     0x8e, 0xbe, 0xbd, 0x95, 0x8f, 0xe7, 0xff, 0xdc, 0xad, 0xc6, 0x97, 0x8c, 0xed, 0xac, 0xbc, 0x9e
 ])
 
-S.maximal_difference_probability() # returns 1.0 i.e there is at least one difference with proba 1
+S.maximal_difference_probability()
+# returns 1.0 i.e there is at least one difference with proba 1
 ```
 
 We found something really interesting !
 
-But wait, what a difference with a probability 1 means ? It means that there exists a tuple $\lparen\delta,\Delta) \in \mathbb{F}_{2^8}^2$ such that :
-For all $x\in\mathbb{F}_{2^8}, S(x+\delta) = S(x) + \Delta$. This also implies that the value of the DDT at $\delta, \Delta$ will be equal to 256.
-
+But wait, what a difference with a probability 1 means ? It means that there exists a tuple $(\delta,\Delta)\in\mathbb{F}\_{2^8}$ such that :
+For all $x\in\mathbb{F}_{2^8}, S(x+\delta) = S(x) + \Delta$ . This also implies that the value of the DDT at $\delta, \Delta$ will be equal to 256.
 
 *Proof :*
 
-Let $x, \delta, \Delta \in \mathbb{F}_{2^8}$, then $P(S(x + \delta) = S(x) + \Delta) = \frac{DDT(\delta, \Delta)}{256}$. So, a differential pair $\lparen\delta, \Delta)$ that holds with a probability of 1 is equivalent to $DDT(\delta, \Delta) = 256$.
-
-
+Let $x, \delta, \Delta \in \mathbb{F}\_{2^8}$, then $P(S(x + \delta) = S(x) + \Delta) = \frac{DDT(\delta, \Delta)}{256}$. So, a differential pair $\lparen\delta, \Delta)$ that holds with a probability of 1 is equivalent to $DDT(\delta, \Delta) = 256$.
 
 We can find the values $\delta, \Delta$ that have such property :
+
 ```python
 ddt = S.difference_distribution_table()
 for i in range(256):
-	for j in range(256):
-		if ddt[i, j] == 256:
-			print(i,j)
+    for j in range(256):
+        if ddt[i, j] == 256:
+            print(i,j)
 ```
 
 We obtain three candidates : $\lparen24, 129), (74, 6)$ and $\lparen82, 134)$.
 
-
 ## Round function differential
+
 Now that we have three differentials with probability 1 for the SBox, then we can try to find a round differential such that the output of the round is also a differential for the next round. To speed up the process, I programmed it in Rust rather than python.
 
 > Note : Because we have 4 candidates for each of the 16 bytes block, we have a total of $4^{16} = 2^{32}$ possibilities, which is brute-forcable. You can find the Rust program at the end of the writeup (it basicaly tries every possible input differential and checks if the output differential is equal to the input one). One may use more sofisticated ways to find interesting round differentials, but the presented method has the avantage to be very straitforward.
 
 Thanks to this program, found a candidate for what we are looking for (in hex, MSB first): `00524a18004a005252001818004a0000`. I will show what it implies and why it is a serious issue.
 
-
 ***
 
-Let write the round function $R = Permute \circ Sbox \circ Addkey$, then we just found $\delta_r$ such that for every possible input value $x$ of $R$, we have $Permute \circ Sbox (x\oplus\delta_r) = Permute \circ Sbox (x) \oplus \delta_r$.
+Let write the round function $R = Permute \circ Sbox \circ Addkey$, then we just found $\delta\_r$ such that for every possible input value $x$ of $R$, we have $Permute \circ Sbox (x\oplus\delta\_r) = Permute \circ Sbox (x) \oplus \delta\_r$.
 Lets prove that thanks to that, one can find a valid differential of probability 1 for an arbitraty number of rounds :
 
-
-1. The first step is to prove that if we have a valid differential pair $\lparen\delta, \Delta)$ for $Permute \circ Sbox$ then this is also a differential pair with probability 1 for $R = Permute \circ Sbox \circ Addkey$ :
-
-*Proof :*
-
-Let $\delta, \Delta \in \mathbb{F}_{2^8}$ such that $\forall x, S(x + \delta) = S(x) + \Delta$, let $x, k \in \mathbb{F}_{2^8}$ be resp. the input of the round function and the key, then $S((x+k)+\delta) = S(x+k) + \Delta$ because $x+k\in\mathbb{F}_{2^8}$.
-
+1. The first step is to prove that if we have a valid differential pair $\lparen\delta, \Delta)$ for $Permute \circ Sbox$ then this is also a differential pair with probability 1 for $R = Permute \circ Sbox \circ Addkey$ :  
+*Proof :*  
+Let $\delta, \Delta \in \mathbb{F}_{2^8}$ such that $\forall x, S(x + \delta) = S(x) + \Delta$, let $x, k \in \mathbb{F}\_{2^8}$ be resp. the input of the round function and the key, then $S((x+k)+\delta) = S(x+k) + \Delta$ because $x+k\in\mathbb{F}\_{2^8}$.
 2. Let assume that we have a found differential pair for the round function $R$ $\lparen\delta_r, \delta_r)$ with probability 1.0.
-- By hypothesis, $\forall x \in \mathbb{F}_{2^{128}}, R(x+\delta_r) = R(x) + \delta_r$.
-- Let assume that for $R^n$ (i.e $n$ compositions of the round function) we have a differential pair $\lparen\delta_r, \delta_r)$ with probability 1.0. Let $x \in \mathbb{F}_{2^{128}}$, then $R^{n+1}(x + \delta_r) = R(R^{n}(x + \delta_r)) = R(R^n(x) + \delta_r) = R^{n+1}(x) + \delta_r$ by hypothesis.
-
-3. Moreover, we also found a differential pair for the inverse of the round function.
-
-*Proof :* Let $x \in \mathbb{F}_{2^{128}}$
-
-$R(x + \delta_r) = R(x) + \delta_r\ \Leftrightarrow\ x + \delta_r = R^{-1}(R(x) + \delta_r)$
-
-Because $R$ and $R^{-1}$ are bijections from $\mathbb{F}_{2^{128}}$ to itself, we can rewrite the last equality as $R^{-1}(y) + \delta_r = R^{-1}(y + \delta_r$ (with $y \in \mathbb{F}_{2^{128}}$).
-
+- By hypothesis, $\forall x \in \mathbb{F}\_{2^{128}}, R(x+\delta_r) = R(x) + \delta\_r$.
+- Let assume that for $R^n$ (i.e $n$ compositions of the round function) we have a differential pair $\lparen\delta\_r, \delta\_r)$ with probability 1.0. Let $x \in \mathbb{F}\_{2^{128}}$, then $R^{n+1}(x + \delta\_r) = R(R^{n}(x + \delta\_r)) = R(R^n(x) + \delta\_r) = R^{n+1}(x) + \delta\_r$ by hypothesis.
+3. Moreover, we also found a differential pair for the inverse of the round function.  
+*Proof :* Let $x \in \mathbb{F}\_{2^{128}}$  
+$R(x + \delta\_r) = R(x) + \delta\_r\ \Leftrightarrow\ x + \delta\_r = R^{-1}(R(x) + \delta\_r)$  
+Because $R$ and $R^{-1}$ are bijections from $\mathbb{F}\_{2^{128}}$ to itself, we can rewrite the last equality as $R^{-1}(y) + \delta_r = R^{-1}(y + \delta_r)$ (with $y \in \mathbb{F}\_{2^{128}}$).
 4. Using the same method as in step 2., one can show that this differential holds for an arbitrary number of inverse rounds.
 
 ***
 
 > Note that we are very lucky to find an input differential with the same output differential, otherwise we would have been forced to look for differentials that propagate over several rounds, which seems at first more complicated.
 
-
 ## Boomerang attack
+
 ### Principle
+
 Okay, so what can we do now ? The goal of the challenge is to forge a valid plaintext/ciphertext pair, which does not necessary imply to recover the key. To achieve that, we have a round differential that progrates for an arbitrary number of rounds, and also for an arbitrary number of inverse rounds.
 
 In fact, an attack seems really interesting : [a boomerang attack](https://en.wikipedia.org/wiki/Boomerang_attack). Here is a diagram of it (from the wikipedia page) :
-
 
 ![boomerang diagram](/assets/img/boomerang.png)
 *Credits : CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=523640*
 
 But why does a boomerang attack seems promising ?
 - First of all, we can encrypt **and** decrypt data (which is not very common in CTF challenges), and we need both encryption and decryption to perform a boomerang attack.
-- Moreover, because of the structure of the cipher and this "Middle" function that is just a multiplication of the state by the key in $\mathbb{F}_{2^{128}}$. This middle part is affine, which implies that it can satisfies the requirements about the differencies called $\Delta^*$ and $\nabla^*$ in the diagram below. The second effect of this middle part is that it stops the differential that propagates during the 20 previous rounds.
+- Moreover, because of the structure of the cipher and this "Middle" function that is just a multiplication of the state by the key in $\mathbb{F}_{2^{128}}$. This middle part is affine, which implies that it can satisfies the requirements about the differencies called $\Delta^\ast$ and $\nabla^\ast$ in the diagram below. The second effect of this middle part is that it stops the differential that propagates during the 20 previous rounds.
 - Finally, $E_0$ showed in the diagram can be written here as the first $N$ rounds before the Middle part, and $E_1$ can be written as the middle part and the last $N$ rounds.
 
-> Note that one can also state that $E_0$ is made of the firsts $N$ rounds and the middle part, and $E_1$ is made of the lasts $N$ rounds, this is totaly equivalent, we will just have differents values for $\Delta^\ast$ and $\nabla^\ast$.
+> Note that one can also state that $E_0$ is made of the firsts $N$ rounds and the middle part, and $E_1$ is made of the lasts $N$ rounds, this is totaly equivalent, we will just have differents values for $\Delta^{\ast}$ and $\nabla^{\ast}$.
 
 Perfect, so let's proceed to get a new plaintext/ciphertext pair !
 
 ### In practice
+
 By following the notations of the diagram of the boomerang attack :
 - I will choose a random $P$, ask for its encryption $C$ by the cipher, then ask for the decryption $Q$ of $D = \delta_r \oplus C$.
 - Then I will ask for the encryption $C'$ of $P' = P \oplus \delta_r$.
 - Then using the boomerang property, I know that the decryption of $C' \oplus \delta_r$ will be equals to $Q \oplus \delta_r$.
 
 Let's put that in a python script :
+
 ```python
 from pwn import *
 
@@ -211,6 +203,7 @@ r.recvall()
 We got the flag ! I would like to thanks `graniter` and more generaly all the FCSC team for creating such challenges !
 
 # Rust source code
+
 ```rust
 use std::io::stdout;
 use std::io::Write;
