@@ -16,7 +16,7 @@ Here is some technical details :
 - 128 bits of block size
 - 3 parts for the encryption/decryption :
 	- 20 rounds of round key addition, substitution and permutation,
-	- A multiplication of the state at this point by the secret key in $`\mathbb{F}_{2^{128}}`$,
+	- A multiplication of the state at this point by the secret key in $\mathbb{F}_{2^{128}}$,
 	- Another 20 rounds of round key addition, substitution and permutation.
 - No key schedule, the same key is repeated for each round
 
@@ -26,11 +26,11 @@ Some details about this challenge are a bit unusual, we can ask for encryption *
 
 # Notations
 I will precise some notations that I will use during this writeup :
-- $`a\oplus b`$ means the bitwise-XOR between $`a`$ and $`b`$,
-- If $`a, b \in \mathbb{F}_{2^n}`$, then the XOR is just the addition in that field, that will be noted $`a+b`$,
-- Let $`E`$ be a set, then $`\#E`$ is the cardinality of $`E`$,
-- $`\lbrace a, \ldots, b \rbrace`$ is the set of all the integers between $a$ and $b$, both included.
-- $`\mathbb{P}(A)`$ is the probability of $A$ to occur.
+- $a\oplus b$ means the bitwise-XOR between $a$ and $b$,
+- If $a, b \in \mathbb{F}_{2^n}$, then the XOR is just the addition in that field, that will be noted $a+b$,
+- Let $E$ be a set, then $\#E$ is the cardinality of $E$,
+- $\lbrace a, \ldots, b \rbrace$ is the set of all the integers between $a$ and $b$, both included.
+- $\mathbb{P}(A)$ is the probability of $A$ to occur.
 
 
 # Solve
@@ -40,7 +40,7 @@ When we are facing a symetric cipher, one of the first thing that I try is to an
 
 
 Some tools are really usefull (you can check the documentation below to have a better understanding of it):
-- DDT (Difference Distribution Table), it allows to detect if an SBox has some issues with differential cryptanalysis. More formaly $`DDT(i,j) = \#\lbrace x\in\lbrace 0, \ldots, 255\rbrace, SBox(x \oplus i) = SBox(x) \oplus j\rbrace`$.
+- DDT (Difference Distribution Table), it allows to detect if an SBox has some issues with differential cryptanalysis. More formaly $DDT(i,j) = \#\lbrace x\in\lbrace 0, \ldots, 255\rbrace, SBox(x \oplus i) = SBox(x) \oplus j\rbrace$.
 - LAT (Linear Approximation Table) that allows to detect linear relations between the input of the SBox and the output of it.
 
 
@@ -75,17 +75,17 @@ S.maximal_difference_probability() # returns 1.0 i.e there is at least one diffe
 
 We found something really interesting !
 
-But wait, what a difference with a probability 1 means ? It means that there exists a tuple $`(\delta,\Delta) \in \mathbb{F}_{2^8}^2`$ such that :
-For all $`x\in\mathbb{F}_{2^8}, S(x+\delta) = S(x) + \Delta`$. This also implies that the value of the DDT at $`\delta, \Delta`$ will be equal to 256.
+But wait, what a difference with a probability 1 means ? It means that there exists a tuple $(\delta,\Delta) \in \mathbb{F}_{2^8}^2$ such that :
+For all $x\in\mathbb{F}_{2^8}, S(x+\delta) = S(x) + \Delta$. This also implies that the value of the DDT at $\delta, \Delta$ will be equal to 256.
 
 
 *Proof :*
 
-Let $`x, \delta, \Delta \in \mathbb{F}_{2^8}`$, then $`P(S(x + \delta) = S(x) + \Delta) = \frac{DDT(\delta, \Delta)}{256}`$. So, a differential pair $`(\delta, \Delta)`$ that holds with a probability of 1 is equivalent to $`DDT(\delta, \Delta) = 256`$.
+Let $x, \delta, \Delta \in \mathbb{F}_{2^8}$, then $P(S(x + \delta) = S(x) + \Delta) = \frac{DDT(\delta, \Delta)}{256}$. So, a differential pair $(\delta, \Delta)$ that holds with a probability of 1 is equivalent to $DDT(\delta, \Delta) = 256$.
 
 
 
-We can find the values $`\delta, \Delta`$ that have such property :
+We can find the values $\delta, \Delta$ that have such property :
 ```python
 ddt = S.difference_distribution_table()
 for i in range(256):
@@ -94,7 +94,7 @@ for i in range(256):
 			print(i,j)
 ```
 
-We obtain three candidates : $`(24, 129), (74, 6)`$ and $`(82, 134)`$.
+We obtain three candidates : $(24, 129), (74, 6)$ and $(82, 134)$.
 
 
 ## Round function differential
@@ -107,27 +107,27 @@ Thanks to this program, found a candidate for what we are looking for (in hex, M
 
 ***
 
-Let write the round function $`R = Permute \circ Sbox \circ Addkey`$, then we just found $`\delta_r`$ such that for every possible input value $`x`$ of $`R`$, we have $`Permute \circ Sbox (x\oplus\delta_r) = Permute \circ Sbox (x) \oplus \delta_r`$.
+Let write the round function $R = Permute \circ Sbox \circ Addkey$, then we just found $\delta_r$ such that for every possible input value $x$ of $R$, we have $Permute \circ Sbox (x\oplus\delta_r) = Permute \circ Sbox (x) \oplus \delta_r$.
 Lets prove that thanks to that, one can find a valid differential of probability 1 for an arbitraty number of rounds :
 
 
-1. The first step is to prove that if we have a valid differential pair $`(\delta, \Delta)`$ for $`Permute \circ Sbox`$ then this is also a differential pair with probability 1 for $`R = Permute \circ Sbox \circ Addkey`$ :
+1. The first step is to prove that if we have a valid differential pair $(\delta, \Delta)$ for $Permute \circ Sbox$ then this is also a differential pair with probability 1 for $R = Permute \circ Sbox \circ Addkey$ :
 
 *Proof :*
 
-Let $`\delta, \Delta \in \mathbb{F}_{2^8}`$ such that $`\forall x, S(x + \delta) = S(x) + \Delta`$, let $`x, k \in \mathbb{F}_{2^8}`$ be resp. the input of the round function and the key, then $`S((x+k)+\delta) = S(x+k) + \Delta`$ because $`x+k\in\mathbb{F}_{2^8}`$.
+Let $\delta, \Delta \in \mathbb{F}_{2^8}$ such that $\forall x, S(x + \delta) = S(x) + \Delta$, let $x, k \in \mathbb{F}_{2^8}$ be resp. the input of the round function and the key, then $S((x+k)+\delta) = S(x+k) + \Delta$ because $x+k\in\mathbb{F}_{2^8}$.
 
-2. Let assume that we have a found differential pair for the round function $`R`$ $`(\delta_r, \delta_r)`$ with probability 1.0.
-- By hypothesis, $`\forall x \in \mathbb{F}_{2^{128}}, R(x+\delta_r) = R(x) + \delta_r`$.
-- Let assume that for $R^n$ (i.e $n$ compositions of the round function) we have a differential pair $`(\delta_r, \delta_r)`$ with probability 1.0. Let $`x \in \mathbb{F}_{2^{128}}`$, then $`R^{n+1}(x + \delta_r) = R(R^{n}(x + \delta_r)) = R(R^n(x) + \delta_r) = R^{n+1}(x) + \delta_r`$ by hypothesis.
+2. Let assume that we have a found differential pair for the round function $R$ $(\delta_r, \delta_r)$ with probability 1.0.
+- By hypothesis, $\forall x \in \mathbb{F}_{2^{128}}, R(x+\delta_r) = R(x) + \delta_r$.
+- Let assume that for $R^n$ (i.e $n$ compositions of the round function) we have a differential pair $(\delta_r, \delta_r)$ with probability 1.0. Let $x \in \mathbb{F}_{2^{128}}$, then $R^{n+1}(x + \delta_r) = R(R^{n}(x + \delta_r)) = R(R^n(x) + \delta_r) = R^{n+1}(x) + \delta_r$ by hypothesis.
 
 3. Moreover, we also found a differential pair for the inverse of the round function.
 
-*Proof :* Let $`x \in \mathbb{F}_{2^{128}}`$
+*Proof :* Let $x \in \mathbb{F}_{2^{128}}$
 
-$`R(x + \delta_r) = R(x) + \delta_r\ \Leftrightarrow\ x + \delta_r = R^{-1}(R(x) + \delta_r)`$
+$R(x + \delta_r) = R(x) + \delta_r\ \Leftrightarrow\ x + \delta_r = R^{-1}(R(x) + \delta_r)$
 
-Because $`R`$ and $`R^{-1}`$ are bijections from $`\mathbb{F}_{2^{128}}`$ to itself, we can rewrite the last equality as $`R^{-1}(y) + \delta_r = R^{-1}(y + \delta_r`$ (with $`y \in \mathbb{F}_{2^{128}}`$).
+Because $R$ and $R^{-1}$ are bijections from $\mathbb{F}_{2^{128}}$ to itself, we can rewrite the last equality as $R^{-1}(y) + \delta_r = R^{-1}(y + \delta_r$ (with $y \in \mathbb{F}_{2^{128}}$).
 
 4. Using the same method as in step 2., one can show that this differential holds for an arbitrary number of inverse rounds.
 
@@ -148,16 +148,16 @@ In fact, an attack seems really interesting : [a boomerang attack](https://en.wi
 
 But why does a boomerang attack seems promising ?
 - First of all, we can encrypt **and** decrypt data (which is not very common in CTF challenges), and we need both encryption and decryption to perform a boomerang attack.
-- Moreover, because of the structure of the cipher and this "Middle" function that is just a multiplication of the state by the key in $`\mathbb{F}_{2^{128}}`$. This middle part is affine, which implies that it can satisfies the requirements about the differencies called $`\Delta^*`$ and $`\nabla^*`$ in the diagram below. The second effect of this middle part is that it stops the differential that propagates during the 20 previous rounds.
-- Finally, $`E_0`$ showed in the diagram can be written here as the first $N$ rounds before the Middle part, and $`E_1`$ can be written as the middle part and the last $N$ rounds.
+- Moreover, because of the structure of the cipher and this "Middle" function that is just a multiplication of the state by the key in $\mathbb{F}_{2^{128}}$. This middle part is affine, which implies that it can satisfies the requirements about the differencies called $\Delta^*$ and $\nabla^*$ in the diagram below. The second effect of this middle part is that it stops the differential that propagates during the 20 previous rounds.
+- Finally, $E_0$ showed in the diagram can be written here as the first $N$ rounds before the Middle part, and $E_1$ can be written as the middle part and the last $N$ rounds.
 
-> Note that one can also state that $`E_0`$ is made of the firsts $N$ rounds and the middle part, and $`E_1`$ is made of the lasts $N$ rounds, this is totaly equivalent, we will just have differents values for $`\Delta^*`$ and $`\nabla^*`$.
+> Note that one can also state that $E_0$ is made of the firsts $N$ rounds and the middle part, and $E_1$ is made of the lasts $N$ rounds, this is totaly equivalent, we will just have differents values for $\Delta^*$ and $\nabla^*$.
 
 Perfect, so let's proceed to get a new plaintext/ciphertext pair !
 
 ### In practice
 By following the notations of the diagram of the boomerang attack :
-- I will choose a random $P$, ask for its encryption $C$ by the cipher, then ask for the decryption $Q$ of $`D = \delta_r \oplus C`$.
+- I will choose a random $P$, ask for its encryption $C$ by the cipher, then ask for the decryption $Q$ of $D = \delta_r \oplus C$.
 - Then I will ask for the encryption $C'$ of $P' = P \oplus \delta_r$.
 - Then using the boomerang property, I know that the decryption of $C' \oplus \delta_r$ will be equals to $Q \oplus \delta_r$.
 
