@@ -75,13 +75,13 @@ S.maximal_difference_probability() # returns 1.0 i.e there is at least one diffe
 
 We found something really interesting !
 
-But wait, what a difference with a probability 1 means ? It means that there exists a tuple $(\delta,\Delta) \in \mathbb{F}_{2^8}^2$ such that :
+But wait, what a difference with a probability 1 means ? It means that there exists a tuple $\lparen\delta,\Delta) \in \mathbb{F}_{2^8}^2$ such that :
 For all $x\in\mathbb{F}_{2^8}, S(x+\delta) = S(x) + \Delta$. This also implies that the value of the DDT at $\delta, \Delta$ will be equal to 256.
 
 
 *Proof :*
 
-Let $x, \delta, \Delta \in \mathbb{F}_{2^8}$, then $P(S(x + \delta) = S(x) + \Delta) = \frac{DDT(\delta, \Delta)}{256}$. So, a differential pair $(\delta, \Delta)$ that holds with a probability of 1 is equivalent to $DDT(\delta, \Delta) = 256$.
+Let $x, \delta, \Delta \in \mathbb{F}_{2^8}$, then $P(S(x + \delta) = S(x) + \Delta) = \frac{DDT(\delta, \Delta)}{256}$. So, a differential pair $\lparen\delta, \Delta)$ that holds with a probability of 1 is equivalent to $DDT(\delta, \Delta) = 256$.
 
 
 
@@ -94,7 +94,7 @@ for i in range(256):
 			print(i,j)
 ```
 
-We obtain three candidates : $(24, 129), (74, 6)$ and $(82, 134)$.
+We obtain three candidates : $\lparen24, 129), (74, 6)$ and $\lparen82, 134)$.
 
 
 ## Round function differential
@@ -111,15 +111,15 @@ Let write the round function $R = Permute \circ Sbox \circ Addkey$, then we just
 Lets prove that thanks to that, one can find a valid differential of probability 1 for an arbitraty number of rounds :
 
 
-1. The first step is to prove that if we have a valid differential pair $(\delta, \Delta)$ for $Permute \circ Sbox$ then this is also a differential pair with probability 1 for $R = Permute \circ Sbox \circ Addkey$ :
+1. The first step is to prove that if we have a valid differential pair $\lparen\delta, \Delta)$ for $Permute \circ Sbox$ then this is also a differential pair with probability 1 for $R = Permute \circ Sbox \circ Addkey$ :
 
 *Proof :*
 
 Let $\delta, \Delta \in \mathbb{F}_{2^8}$ such that $\forall x, S(x + \delta) = S(x) + \Delta$, let $x, k \in \mathbb{F}_{2^8}$ be resp. the input of the round function and the key, then $S((x+k)+\delta) = S(x+k) + \Delta$ because $x+k\in\mathbb{F}_{2^8}$.
 
-2. Let assume that we have a found differential pair for the round function $R$ $(\delta_r, \delta_r)$ with probability 1.0.
+2. Let assume that we have a found differential pair for the round function $R$ $\lparen\delta_r, \delta_r)$ with probability 1.0.
 - By hypothesis, $\forall x \in \mathbb{F}_{2^{128}}, R(x+\delta_r) = R(x) + \delta_r$.
-- Let assume that for $R^n$ (i.e $n$ compositions of the round function) we have a differential pair $(\delta_r, \delta_r)$ with probability 1.0. Let $x \in \mathbb{F}_{2^{128}}$, then $R^{n+1}(x + \delta_r) = R(R^{n}(x + \delta_r)) = R(R^n(x) + \delta_r) = R^{n+1}(x) + \delta_r$ by hypothesis.
+- Let assume that for $R^n$ (i.e $n$ compositions of the round function) we have a differential pair $\lparen\delta_r, \delta_r)$ with probability 1.0. Let $x \in \mathbb{F}_{2^{128}}$, then $R^{n+1}(x + \delta_r) = R(R^{n}(x + \delta_r)) = R(R^n(x) + \delta_r) = R^{n+1}(x) + \delta_r$ by hypothesis.
 
 3. Moreover, we also found a differential pair for the inverse of the round function.
 
