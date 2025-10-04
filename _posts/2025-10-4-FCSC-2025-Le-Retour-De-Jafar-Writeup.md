@@ -40,7 +40,7 @@ When we are facing a symetric cipher, one of the first thing that I try is to an
 
 
 Some tools are really usefull (you can check the documentation below to have a better understanding of it):
-- DDT (Difference Distribution Table), it allows to detect if an SBox has some issues with differential cryptanalysis. More formaly $DDT\(i,j\) = \#\lbrace x\in\lbrace 0, \ldots, 255\rbrace, SBox\(x \oplus i\) = SBox\(x\) \oplus j\rbrace$.
+- DDT (Difference Distribution Table), it allows to detect if an SBox has some issues with differential cryptanalysis. More formaly $DDT\(i,j\) = \#\lbrace x\in\lbrace 0, \ldots, 255\rbrace, SBox\(x \oplus i\) = SBox\(x\) \oplus j\rbrace$ .
 - LAT (Linear Approximation Table) that allows to detect linear relations between the input of the SBox and the output of it.
 
 
