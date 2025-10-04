@@ -143,15 +143,15 @@ Okay, so what can we do now ? The goal of the challenge is to forge a valid plai
 In fact, an attack seems really interesting : [a boomerang attack](https://en.wikipedia.org/wiki/Boomerang_attack). Here is a diagram of it (from the wikipedia page) :
 
 
-![boomerang diagram](/assets/img/Attaque_boomerang.png)
-
+![boomerang diagram](/assets/img/boomerang.png)
+*Credits : CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=523640*
 
 But why does a boomerang attack seems promising ?
 - First of all, we can encrypt **and** decrypt data (which is not very common in CTF challenges), and we need both encryption and decryption to perform a boomerang attack.
 - Moreover, because of the structure of the cipher and this "Middle" function that is just a multiplication of the state by the key in $\mathbb{F}_{2^{128}}$. This middle part is affine, which implies that it can satisfies the requirements about the differencies called $\Delta^*$ and $\nabla^*$ in the diagram below. The second effect of this middle part is that it stops the differential that propagates during the 20 previous rounds.
 - Finally, $E_0$ showed in the diagram can be written here as the first $N$ rounds before the Middle part, and $E_1$ can be written as the middle part and the last $N$ rounds.
 
-> Note that one can also state that $E_0$ is made of the firsts $N$ rounds and the middle part, and $E_1$ is made of the lasts $N$ rounds, this is totaly equivalent, we will just have differents values for $\Delta^*$ and $\nabla^*$.
+> Note that one can also state that $E_0$ is made of the firsts $N$ rounds and the middle part, and $E_1$ is made of the lasts $N$ rounds, this is totaly equivalent, we will just have differents values for $\Delta^\ast$ and $\nabla^\ast$.
 
 Perfect, so let's proceed to get a new plaintext/ciphertext pair !
 
