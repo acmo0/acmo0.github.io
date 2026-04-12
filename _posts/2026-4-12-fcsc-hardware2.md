@@ -139,7 +139,7 @@ Two retrieve the decoded bytes, we have to know how the parallel bitstreams of t
 
 The table 3 of the spec (page 14) gives such information. We can de-interleave the bits to retrieve the "original" bytes (note that the encoded bits of `A` are transmitted in the "right" order, no need to deinterleave them) :
 
-```python3
+```python
 import numpy as np
 from viterbi import Viterbi
 
