@@ -5,9 +5,6 @@ tags: Write-up 404CTF2025 hardware radio-frequencies signal usb i2c personnal-ch
 katex: true
 ---
 
-> Please note that I cover the creation of these challenges in [this article](/2025-6-9-404CTF-2025-Hardware-Challenge-Creation/).
-
-
 # Covered challenges
 
 
@@ -181,14 +178,14 @@ In a nutshell, if the voltage at the non-inverting input (+) is greater than the
 If there is $n$ resistors between the considered inverting input and the ground then the voltage at this point will be : $VCC\times\frac{m}{16}$. Furthermore, one can note that if an op-amp outputs *VCC*, then all the op-amp "below" on the schematic will also output *VCC*.
 
 Lets compute how many op-amp outputs a voltage of VCC for every given voltage :
-- $VCC \times \frac{7}{16} < 2.34V < VCC \times \frac{8}{16}$ : 7 op-amps ouputs the VCC voltage -> LEDs 1, 2 and 3 are on
-- $VCC \times \frac{12}{16} < 3.9V < VCC \times \frac{13}{16}$ : 12 op-amps ouputs the VCC voltage -> LEDs 3 and 4 are on
-- $VCC \times \frac{1}{16} < 0.47V < VCC \times \frac{2}{16}$ : 1 op-amp ouputs the VCC voltage -> LED 1 is on
-- $VCC \times \frac{2}{16} < 0.78V < VCC \times \frac{3}{16}$ : 2 op-amps ouputs the VCC voltage -> LED 2 is on
-- $VCC \times \frac{14}{16} < 4.52V < VCC \times \frac{15}{16}$ : 14 op-amps ouputs the VCC voltage -> LEDs 2, 3 and 4 are on
-- $VCC \times \frac{9}{16} < 2.96V < VCC \times \frac{10}{16}$ : 9 op-amps ouputs the VCC voltage -> LEDs 1 and 4 are on
+- $VCC \times \frac{7}{16} < 2.34V < VCC \times \frac{8}{16}$ : 8 op-amps ouputs the VCC voltage -> LEDs 1, 2 and 3 are on
+- $VCC \times \frac{12}{16} < 3.9V < VCC \times \frac{13}{16}$ : 13 op-amps ouputs the VCC voltage -> LEDs 3 and 4 are on
+- $VCC \times \frac{1}{16} < 0.47V < VCC \times \frac{2}{16}$ : 2 op-amp ouputs the VCC voltage -> LED 1 is on
+- $VCC \times \frac{2}{16} < 0.78V < VCC \times \frac{3}{16}$ : 3 op-amps ouputs the VCC voltage -> LED 2 is on
+- $VCC \times \frac{14}{16} < 4.52V < VCC \times \frac{15}{16}$ : 15 op-amps ouputs the VCC voltage -> LEDs 2, 3 and 4 are on
+- $VCC \times \frac{9}{16} < 2.96V < VCC \times \frac{10}{16}$ : 10 op-amps ouputs the VCC voltage -> LEDs 1 and 4 are on
 
-Note that this circuits acts like an analog to digital converter on 4 bits, but integrated circuits are used instead of micro-controller. Moreover, there is better designs of analog to digital converter.
+Note that this circuits acts like an analog to digital converter on 4 bits, but integrated circuits are used instead of micro-controller. Moreover, there is way better designs of analog to digital converter.
 
 ***
 
