@@ -13,24 +13,22 @@ the challenge had a logical flaw allowing to completely bypass the crypto
 part of it.
 
 ## TL;DR
-- Based on generic Yoyo distinguisher for two rounds SPN from [`[1]`](https://eprint.iacr.org/2017/980)
+- Based on generic Yoyo distinguisher for two-rounds SPN from [`[1]`](https://eprint.iacr.org/2017/980)
 - Use mega-sbox representation, similarly to super-sbox representation of AES [`[2]`](https://link.springer.com/chapter/10.1007/978-3-662-45611-8_11) and pholkos [`[3]`](https://tosc.iacr.org/index.php/ToSC/article/view/9177) to represent the whole cipher as a two round SPN
 - Play the deterministic yoyo game using encryption/decryption to obtain a distinguisher
 - Repeat the distinguisher 64 times to obtain the flag
 
 ## Challenge analysis
-The cipher code is given in [Appendix A](#a). You can also find it on github (see appendix for full details).
+The cipher code is given in [Appendix A](#a). You can also find it on Github (see appendix for full details).
 
 We are given a cipher with a block and key size of 128 bits.
-To win the flag we need to answer the following question 64 times : does the server
-that encrypt/decrypt my requests just send back random plaintext/ciphertext or is
-it the actual block cipher ?
+To win the flag we need to answer the following question 64 times: does the server encrypt/decrypt my requests using a cipher or a random oracle ?
 Of course we need to find an efficient way to answer this question, otherwise the probability
 of obtaining the flag is around $2^{-64}$.
 
 ## Cipher analysis
 The block cipher is a [substitution permutation network](https://en.wikipedia.org/wiki/Substitution%E2%80%93permutation_network) (SPN). It is decomposed as two substates of 64 bits
-divided in 16 nibbles. A single round function (let call it $R$) applied in parallel on each state. This function is made of the following transformations :
+divided in 16 nibbles. A single round function (let's call it $R$) applied in parallel on each state. This function is made of the following transformations:
 
 - $ARK$ : add (xor) the round key with the state,
 - $S$ : a SBox, from the PRESENT cipher,
@@ -50,7 +48,7 @@ a & 3 & d & 7 \\
 \end{pmatrix}$$
 
 
-- Then eventualy another mixing operation is applied which is a simple affine function in $F_2^{64}$ on the entire substate. Note that the coefficients used depends on the round number : $x \mapsto a_r x + b_r$. Also note that this operation is affine when looking at nibbles in $F_2^4$.
+- Then eventualy another mixing operation is applied which is a simple affine function in $F_2^{64}$ on the entire substate. Note that the coefficients depend on the round number: $x \mapsto a_r x + b_r$. Also note that this operation is affine when looking at nibbles in $F_2^4$.
 
 > Notations : I refer by $R^-$ to a round without the last affine transformation and $R$ a round with it.
 
@@ -61,7 +59,7 @@ The following figure illustrate how a full round act on the input rows.
 
 
 
-Finally, a nibble permutation $\Pi$ is eventually applied such that first it shuffles the two substates together with this permutation
+Finally, a nibble permutation $\Pi$ is eventually applied such that it shuffles the two substates together with this permutation
 
 
 $$\chi := [
@@ -76,7 +74,7 @@ $$\chi := [
 ]
 $$ 
 
-and then a transposition on each state is applied.
+and then transpose each state in parallel.
 
 Here is the overall cipher structure :
 
@@ -85,20 +83,20 @@ Here is the overall cipher structure :
 
 
 ## A Mega-SBox representation
-As there exists a super-sbox representation of AES [`[2]`](https://link.springer.com/chapter/10.1007/978-3-662-45611-8_11), one can find what can be called a mega-sbox reprensentation for our cipher. In fact, similar observations has already been done on Pholkos [`[3]`](https://tosc.iacr.org/index.php/ToSC/article/view/9177).
-Such Mega-SBox spans over almost 4 rounds of the cipher and is 64 bits wide. Here is a visual representation of that Mega-SBox :
+As there exists a Super-SBox representation of AES [`[2]`](https://link.springer.com/chapter/10.1007/978-3-662-45611-8_11), one can find what can be called a Mega-SBox reprensentation for our cipher. In fact, similar observations has already been done on Pholkos [`[3]`](https://tosc.iacr.org/index.php/ToSC/article/view/9177).
+Such a Mega-SBox spans over almost 4 rounds of the cipher and is 64 bits wide. Here is a visual representation of that Mega-SBox:
 
 <img src="/assets/img/andouillette/megasbox.svg" style="width: 100%;">
 
 
 If you forget for now the last $MC$ and $M$ (the affine function over $\mathbb{F}_2^{64}$),
-then we clearly see that red and blue nibbles are following an independant path that act as a 64 bits SBox.
+then we clearly see that red and blue nibbles are following an independent path that acts as a 64 bits SBox.
 
-This represention is the key observation of this challenge as it will allow us to build a distinguisher. Now the whole cipher is simply $$megaSbox_2\circ M \circ MC \circ megaSbox_1$$.
+This representation is the key observation of this challenge, as it will allow us to build a distinguisher. Now the whole cipher is simply $$megaSbox_2\circ M \circ MC \circ megaSbox_1$$ i.e. a (Mega-)SBox layer followed by a linear layer $$M\circ MC$$ and another (Mega-)SBox layer.
 
 ## Yoyo distinguisher
 
-> Note : I suggest you to read before or at the same time this part with [`[1]`](https://eprint.iacr.org/2017/980) to have a better understanding of the attack.
+> Note: I suggest to read before or at the same time as the following part with [`[1]`](https://eprint.iacr.org/2017/980) to have a better understanding of the attack.
 
 
 **Notations**
@@ -111,7 +109,7 @@ This represention is the key observation of this challenge as it will allow us t
 
 **Properties from `[1]`**
 
-From [`[1]`](https://eprint.iacr.org/2017/980), we know that for any two round SPN made of an affine layer $L$ and sboxes $S$ ($S$ may be different at each round) :
+From [`[1]`](https://eprint.iacr.org/2017/980), we know that for any two-rounds SPN made of an affine layer $L$ and sboxes $S$ ($S$ may be different at each round) :
 
 
 $$\nu(S\circ L \circ S (\alpha) \oplus S\circ L \circ S (\beta)) = 
@@ -124,12 +122,12 @@ $$
 $$
 
 
-This means that the activity pattern ($\nu$) is preserved when some independant words are swaped. Note that it also works for decryption since $E^{-1}$ is also a two round SPN, we will use this exact property to distinguish the cipher from a random permutation.
+This means that the activity pattern ($\nu$) is preserved when some independent words are swapped. Note that it also works for decryption since $E^{-1}$ is also a two-round SPN, we will use this exact property to distinguish the cipher from a random permutation.
 
 **Distinguisher**
 
 Here is the idea of the distinguisher :
-- Take two plaintexts $\alpha = (*, 0)$ and $\beta = (*, 0)$. The first coordinate of the plaintexts corresponds to the first Mega-SBox (i.e the first two lines of each state) and is choosen at random while the second one corresponds to the second Mega-SBox is set to zero (in fact it can be anything as long as they are equal),
+- Take two plaintexts $\alpha = (\*, 0)$ and $\beta = (\*, 0)$. The first coordinate of the plaintexts corresponds to the first Mega-SBox (i.e the first two lines of each state) and is chosen at random while the second word corresponds to the second Mega-SBox and is set to zero (in fact it can be anything as long as they are equal),
 - We know that $\nu(\alpha \oplus \beta) = (1, 0)$ with overwhelming probability,
 - Ask for the encryption of $\alpha$ and $\beta$ to obtain $c_\alpha$ and $c_\beta$,
 - Swap a word between $c_\alpha$ and $c_\beta$ to obtain $c_\alpha'$ and $c_\beta'$,
@@ -138,6 +136,11 @@ Here is the idea of the distinguisher :
 - If $a = \nu(\alpha \oplus \beta)$ then our distinguisher worked and we were dealing with the cipher, otherwise we were dealing with a random oracle.
 
 > I strongly recommend to read `[1]` to fully understand why it is working
+
+
+## Going further
+
+Such attack belongs to the family of structural attacks and is somewhat related to exchange attacks [`[5]`](https://eprint.iacr.org/2019/652), mixture differential cryptanalysis (as well as multiple of eight) [`[4]`](https://eprint.iacr.org/2017/832.pdf). The fundamental idea of these attacks is to exploit the strong structure of the SPN, allowing to be somewhat agnostic to the details of the SBoxes and find another representation of the cipher. This idea has proved to be powerful against AES-like ciphers and derivatives as the structure is very strong.
 
 
 **Solve script**
@@ -229,13 +232,20 @@ print(r.recvline())
 
 
 ## References
-`[1]` Sondre Rønjom and Navid Ghaedi Bardeh and Tor Helleseth, Yoyo Tricks with AES, Cryptology ePrint Archive, https://ia.cr/2017/980
+`[1]` Sondre Rønjom and Navid Ghaedi Bardeh and Tor Helleseth, Yoyo Tricks with AES, Cryptology ePrint Archive, [https://ia.cr/2017/980](https://ia.cr/2017/980)
 
 
-`[2]` Gilbert, H. (2014). A Simplified Representation of AES. In: Sarkar, P., Iwata, T. (eds) Advances in Cryptology – ASIACRYPT 2014. ASIACRYPT 2014. Lecture Notes in Computer Science, vol 8873. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-662-45611-8_11
+`[2]` Gilbert, H. (2014). A Simplified Representation of AES. In: Sarkar, P., Iwata, T. (eds) Advances in Cryptology – ASIACRYPT 2014. ASIACRYPT 2014. Lecture Notes in Computer Science, vol 8873. Springer, Berlin, Heidelberg. [https://doi.org/10.1007/978-3-662-45611-8_11](https://doi.org/10.1007/978-3-662-45611-8_11)
 
 
-`[3]` Rahman, M., Saha, D., & Paul, G. (2021). Boomeyong: Embedding Yoyo within Boomerang and its Applications to Key Recovery Attacks on AES and Pholkos. IACR Transactions on Symmetric Cryptology, 2021(3), 137-169. https://doi.org/10.46586/tosc.v2021.i3.137-169
+`[3]` Rahman, M., Saha, D., & Paul, G. (2021). Boomeyong: Embedding Yoyo within Boomerang and its Applications to Key Recovery Attacks on AES and Pholkos. IACR Transactions on Symmetric Cryptology, 2021(3), 137-169. [https://doi.org/10.46586/tosc.v2021.i3.137-169](https://doi.org/10.46586/tosc.v2021.i3.137-169)
+
+
+`[4]` Lorenzo Grassi. Mixture Differential Cryptanalysis and Structural Truncated Differential Attacks on round-reduced AES. Cryptology ePrint Archive, Paper 2017/832. 2017. [https://eprint.iacr.org/2017/832](https://eprint.iacr.org/2017/832)
+
+
+`[5]` Navid Ghaedi Bardeh and Sondre Rønjom. The Exchange Attack: How to Distinguish Six Rounds of AES with $2^{88.2}$ chosen plaintexts. Cryptology ePrint Archive, Paper 2019/652. 2019. [https://eprint.iacr.org/2019/652](https://eprint.iacr.org/2019/652)
+
 
 
 ## Appendix
@@ -243,7 +253,7 @@ print(r.recvline())
 ### A
 
 Here is the full code of the challenge (you can also find it on the official repo of the
-404CTF 2026 on github [here](https://github.com/HackademINT/404CTF-2026/tree/main/Cryptanalyse))
+404CTF 2026 on Github [here](https://github.com/HackademINT/404CTF-2026/tree/main/Cryptanalyse))
 
 The main code
 
